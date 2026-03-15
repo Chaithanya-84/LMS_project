@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppShell } from "@/components/Layout/AppShell";
+import { LayoutPicker } from "@/components/Layout/LayoutPicker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-geist-sans" });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
-        <AppShell>{children}</AppShell>
+        <LayoutPicker>{children}</LayoutPicker>
       </body>
     </html>
   );

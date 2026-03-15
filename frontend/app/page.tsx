@@ -44,7 +44,7 @@ export default function HomePage() {
             A professional learning management system with video-based courses,
             progress tracking, and structured learning paths.
           </p>
-          <div className="mt-10 flex justify-center gap-4">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link
             href="/auth/register"
             className="rounded-xl bg-primary-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary-700 transition-colors"
@@ -56,6 +56,12 @@ export default function HomePage() {
             className="rounded-xl border-2 border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 hover:border-primary-500 hover:text-primary-600 transition-colors"
           >
             Sign in
+          </Link>
+          <Link
+            href="/demo"
+            className="rounded-xl border-2 border-slate-400 px-8 py-4 text-lg font-semibold text-slate-600 hover:border-slate-600 hover:text-slate-800 transition-colors"
+          >
+            View Demo
           </Link>
           </div>
         </div>
