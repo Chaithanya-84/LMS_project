@@ -25,7 +25,7 @@ export function SubjectSidebar() {
 
   if (loading) {
     return (
-      <aside className="w-72 shrink-0 border-r border-slate-200 bg-white p-4">
+      <aside className="w-72 shrink-0 border-r border-slate-700 bg-slate-900 p-4">
         <div className="flex justify-center py-12">
           <Spinner />
         </div>
@@ -35,8 +35,8 @@ export function SubjectSidebar() {
 
   if (error) {
     return (
-      <aside className="w-72 shrink-0 border-r border-slate-200 bg-white p-4">
-        <p className="text-sm text-red-600">{error}</p>
+      <aside className="w-72 shrink-0 border-r border-slate-700 bg-slate-900 p-4">
+        <p className="text-sm text-red-400">{error}</p>
       </aside>
     );
   }
@@ -44,18 +44,18 @@ export function SubjectSidebar() {
   if (!tree) return null;
 
   return (
-    <aside className="w-72 shrink-0 border-r border-slate-200 bg-white">
+    <aside className="w-72 shrink-0 border-r border-slate-700 bg-slate-900">
       <div className="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto p-4">
-        <h2 className="mb-4 font-semibold text-slate-800">{tree.title}</h2>
+        <h2 className="mb-4 font-semibold text-white">{tree.title}</h2>
         {progress && progress.total_videos > 0 && (
-          <div className="mb-4 rounded-lg bg-slate-100 p-3">
+          <div className="mb-4 rounded-lg bg-slate-800 p-3">
             <div className="mb-2 flex justify-between text-sm">
-              <span className="font-medium text-slate-700">Progress</span>
-              <span className="text-slate-600">{progress.percent_complete}%</span>
+              <span className="font-medium text-slate-300">Progress</span>
+              <span className="text-slate-400">{progress.percent_complete}%</span>
             </div>
-            <div className="h-2 overflow-hidden rounded-full bg-slate-200">
+            <div className="h-2 overflow-hidden rounded-full bg-slate-700">
               <div
-                className="h-full rounded-full bg-primary-600 transition-all duration-300"
+                className="h-full rounded-full bg-emerald-500 transition-all duration-300"
                 style={{ width: `${progress.percent_complete}%` }}
               />
             </div>
@@ -114,21 +114,21 @@ function VideoItem({
   const content = (
     <span className="flex items-center gap-2">
       {isCompleted ? (
-        <span className="text-primary-600" title="Completed">
+        <span className="text-emerald-500" title="Completed">
           ✓
         </span>
       ) : isLocked ? (
-        <span className="text-slate-400" title="Locked">
+        <span className="text-slate-500" title="Locked">
           🔒
         </span>
       ) : (
-        <span className="text-slate-400">○</span>
+        <span className="text-slate-500">○</span>
       )}
       <span
         className={
           isLocked
-            ? "text-slate-400 line-through"
-            : "text-slate-700 hover:text-primary-600"
+            ? "text-slate-500 line-through"
+            : "text-slate-300 hover:text-emerald-400"
         }
       >
         {video.title}
@@ -138,7 +138,7 @@ function VideoItem({
 
   if (isLocked) {
     return (
-      <li className="rounded-lg px-3 py-2 text-sm cursor-not-allowed bg-slate-50">
+      <li className="rounded-lg px-3 py-2 text-sm cursor-not-allowed bg-slate-800/50">
         {content}
       </li>
     );
@@ -148,7 +148,7 @@ function VideoItem({
     <li>
       <Link
         href={`/subjects/${subjectId}/video/${video.id}`}
-        className="block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-primary-50"
+        className="block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-slate-800"
       >
         {content}
       </Link>

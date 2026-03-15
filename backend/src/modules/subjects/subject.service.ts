@@ -38,6 +38,10 @@ export async function getSubjectWithStats(subjectId: number) {
     learningOutcomes,
     totalLessons: stats.totalLessons,
     totalDuration: stats.totalDuration,
+    price: subject.price ?? 0,
+    originalPrice: subject.originalPrice ?? null,
+    rating: subject.rating ?? 0,
+    ratingCount: subject.ratingCount ?? 0,
   };
 }
 

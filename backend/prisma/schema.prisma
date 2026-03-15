@@ -32,6 +32,10 @@ model Subject {
   instructor       String?
   learningOutcomes String?  @map("learning_outcomes")
   isPublished      Boolean  @default(false) @map("is_published")
+  price            Int?     @default(0)
+  originalPrice    Int?     @map("original_price")
+  rating           Float?   @default(0)
+  ratingCount      Int?     @default(0) @map("rating_count")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 

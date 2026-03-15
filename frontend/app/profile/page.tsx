@@ -53,48 +53,48 @@ export default function ProfilePage() {
   return (
     <AuthGuard>
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-slate-900">Profile</h1>
-        <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-semibold text-slate-800">Account</h2>
+        <h1 className="text-3xl font-bold text-white">Profile</h1>
+        <div className="mt-6 rounded-xl border border-slate-700 bg-slate-800/50 p-6">
+          <h2 className="text-lg font-semibold text-white">Account</h2>
           <dl className="mt-4 space-y-2">
             <div>
               <dt className="text-sm text-slate-500">Name</dt>
-              <dd className="font-medium text-slate-900">{user?.name}</dd>
+              <dd className="font-medium text-slate-200">{user?.name}</dd>
             </div>
             <div>
               <dt className="text-sm text-slate-500">Email</dt>
-              <dd className="font-medium text-slate-900">{user?.email}</dd>
+              <dd className="font-medium text-slate-200">{user?.email}</dd>
             </div>
           </dl>
         </div>
 
         <div className="mt-8">
-          <h2 className="text-lg font-semibold text-slate-800">Course progress</h2>
+          <h2 className="text-lg font-semibold text-white">Course progress</h2>
           {loading ? (
-            <div className="mt-4 h-8 w-8 animate-spin rounded-full border-4 border-primary-200 border-t-primary-600" />
+            <div className="mt-4 h-8 w-8 animate-spin rounded-full border-4 border-slate-600 border-t-emerald-500" />
           ) : progress.length === 0 ? (
-            <p className="mt-4 text-slate-600">No progress yet. Start a course!</p>
+            <p className="mt-4 text-slate-400">No progress yet. Start a course!</p>
           ) : (
             <div className="mt-4 space-y-4">
               {progress.map((p) => (
                 <div
                   key={p.subject_id}
-                  className="rounded-xl border border-slate-200 bg-white p-4"
+                  className="rounded-xl border border-slate-700 bg-slate-800/50 p-4"
                 >
                   <div className="flex justify-between">
                     <Link
                       href={`/subjects/${p.subject_id}`}
-                      className="font-medium text-primary-600 hover:text-primary-700"
+                      className="font-medium text-emerald-400 hover:text-emerald-300"
                     >
                       {p.title}
                     </Link>
-                    <span className="text-sm text-slate-600">
+                    <span className="text-sm text-slate-500">
                       {p.completed_videos}/{p.total_videos} videos
                     </span>
                   </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200">
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-700">
                     <div
-                      className="h-full rounded-full bg-primary-600 transition-all"
+                      className="h-full rounded-full bg-emerald-500 transition-all"
                       style={{ width: `${p.percent_complete}%` }}
                     />
                   </div>

@@ -8,9 +8,9 @@ export function Alert({
   className?: string;
 }) {
   const styles = {
-    info: "bg-blue-50 text-blue-800 border-blue-200",
-    error: "bg-red-50 text-red-800 border-red-200",
-    success: "bg-green-50 text-green-800 border-green-200",
+    info: "bg-blue-900/30 text-blue-300 border-blue-700",
+    error: "bg-red-900/30 text-red-400 border-red-800",
+    success: "bg-emerald-900/30 text-emerald-400 border-emerald-700",
   };
 
   return (

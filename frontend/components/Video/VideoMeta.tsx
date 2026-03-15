@@ -7,12 +7,12 @@ interface VideoMetaProps {
 export function VideoMeta({ title, description, sectionTitle }: VideoMetaProps) {
   return (
     <div className="mt-4">
-      <p className="text-xs font-medium uppercase tracking-wider text-primary-600">
+      <p className="text-xs font-medium uppercase tracking-wider text-emerald-500">
         {sectionTitle}
       </p>
-      <h1 className="mt-1 text-2xl font-bold text-slate-900">{title}</h1>
+      <h1 className="mt-1 text-2xl font-bold text-white">{title}</h1>
       {description && (
-        <p className="mt-2 text-slate-600 leading-relaxed">{description}</p>
+        <p className="mt-2 text-slate-400 leading-relaxed">{description}</p>
       )}
     </div>
   );

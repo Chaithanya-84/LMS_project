@@ -377,7 +377,25 @@ async function main() {
     });
   }
 
-  for (const course of COURSES) {
+  const coursePrices = [
+    { price: 1299, originalPrice: 9999, rating: 4.7, ratingCount: 12450 },
+    { price: 1499, originalPrice: 12999, rating: 4.8, ratingCount: 8920 },
+    { price: 999, originalPrice: 7999, rating: 4.6, ratingCount: 15600 },
+    { price: 1799, originalPrice: 14999, rating: 4.9, ratingCount: 5200 },
+    { price: 1199, originalPrice: 8999, rating: 4.7, ratingCount: 21000 },
+    { price: 899, originalPrice: 5999, rating: 4.5, ratingCount: 9800 },
+    { price: 1599, originalPrice: 11999, rating: 4.8, ratingCount: 11200 },
+    { price: 1399, originalPrice: 9999, rating: 4.6, ratingCount: 7600 },
+    { price: 999, originalPrice: 6999, rating: 4.7, ratingCount: 14300 },
+    { price: 799, originalPrice: 4999, rating: 4.9, ratingCount: 18900 },
+    { price: 1099, originalPrice: 7999, rating: 4.8, ratingCount: 6700 },
+    { price: 1699, originalPrice: 12999, rating: 4.7, ratingCount: 4200 },
+    { price: 1299, originalPrice: 9999, rating: 4.6, ratingCount: 3100 },
+  ];
+
+  for (let ci = 0; ci < COURSES.length; ci++) {
+    const course = COURSES[ci];
+    const pricing = coursePrices[ci % coursePrices.length];
     let subject = await prisma.subject.findUnique({ where: { slug: course.slug } });
     if (!subject) {
       subject = await prisma.subject.create({
@@ -390,6 +408,20 @@ async function main() {
           instructor: course.instructor,
           learningOutcomes: course.learningOutcomes,
           isPublished: true,
+          price: pricing.price,
+          originalPrice: pricing.originalPrice,
+          rating: pricing.rating,
+          ratingCount: pricing.ratingCount,
+        },
+      });
+    } else {
+      await prisma.subject.update({
+        where: { id: subject.id },
+        data: {
+          price: pricing.price,
+          originalPrice: pricing.originalPrice,
+          rating: pricing.rating,
+          ratingCount: pricing.ratingCount,
         },
       });
     }

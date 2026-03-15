@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AuthGuard } from "@/components/Auth/AuthGuard";
 import { apiFetch } from "@/lib/apiClient";
 import { Spinner } from "@/components/common/Spinner";
 
@@ -14,6 +13,19 @@ interface Subject {
   shortDescription: string | null;
   thumbnail: string | null;
   instructor: string | null;
+  price: number;
+  originalPrice: number | null;
+  rating: number;
+  ratingCount: number;
+}
+
+function formatPrice(cents: number): string {
+  return cents >= 100 ? `$${(cents / 100).toFixed(2)}` : "Free";
+}
+
+function discountPercent(price: number, original: number): number {
+  if (original <= 0) return 0;
+  return Math.round(((original - price) / original) * 100);
 }
 
 export default function SubjectsPage() {
@@ -52,11 +64,10 @@ export default function SubjectsPage() {
   }, [page, search]);
 
   return (
-    <AuthGuard>
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Courses</h1>
-          <p className="mt-2 text-slate-600">
+          <h1 className="text-3xl font-bold text-white">Popular Courses</h1>
+          <p className="mt-2 text-slate-400">
             Browse available courses and start learning.
           </p>
         </div>
@@ -70,7 +81,7 @@ export default function SubjectsPage() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full max-w-md rounded-lg border border-slate-300 px-4 py-2.5 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none"
+            className="w-full max-w-md rounded-lg border border-slate-600 bg-slate-800 px-4 py-2.5 text-white placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none"
           />
         </div>
 
@@ -79,55 +90,81 @@ export default function SubjectsPage() {
             <Spinner />
           </div>
         ) : subjects.length === 0 ? (
-          <div className="rounded-xl border border-slate-200 bg-white p-12 text-center">
-            <p className="text-slate-600">No courses found.</p>
+          <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-12 text-center">
+            <p className="text-slate-400">No courses found.</p>
           </div>
         ) : (
           <>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {subjects.map((subject) => (
-                <div
-                  key={subject.id}
-                  className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all hover:border-primary-200 hover:shadow-md"
-                >
-                  <Link href={`/subjects/${subject.id}`} className="block">
-                    <div className="relative h-48 w-full overflow-hidden bg-slate-200">
-                      {subject.thumbnail ? (
-                        <img
-                          src={subject.thumbnail}
-                          alt={subject.title}
-                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full items-center justify-center bg-gradient-to-br from-primary-400 to-primary-700 text-white text-4xl font-bold">
-                          {subject.title.charAt(0)}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {subjects.map((subject) => {
+                const hasDiscount = subject.originalPrice != null && subject.originalPrice > subject.price;
+                const discount = hasDiscount ? discountPercent(subject.price, subject.originalPrice!) : 0;
+                return (
+                  <div
+                    key={subject.id}
+                    className="group overflow-hidden rounded-xl border border-slate-700 bg-slate-800/50 transition-all hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+                  >
+                    <Link href={`/subjects/${subject.id}`} className="block">
+                      <div className="relative aspect-video w-full overflow-hidden bg-slate-700">
+                        {subject.thumbnail ? (
+                          <img
+                            src={subject.thumbnail}
+                            alt={subject.title}
+                            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center bg-gradient-to-br from-emerald-500 to-emerald-700 text-white text-4xl font-bold">
+                            {subject.title.charAt(0)}
+                          </div>
+                        )}
+                        {hasDiscount && discount > 0 && (
+                          <span className="absolute top-2 left-2 rounded bg-amber-500 px-2 py-0.5 text-xs font-bold text-white">
+                            {discount}% off
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <h2 className="font-semibold text-white group-hover:text-emerald-400 transition-colors line-clamp-2">
+                          {subject.title}
+                        </h2>
+                        {subject.instructor && (
+                          <p className="mt-1 text-xs text-slate-500">
+                            By {subject.instructor}
+                          </p>
+                        )}
+                        <div className="mt-2 flex items-center gap-1 text-sm">
+                          <span className="font-semibold text-amber-400">{subject.rating.toFixed(1)}</span>
+                          <span className="text-amber-500">★</span>
+                          {subject.ratingCount > 0 && (
+                            <span className="text-slate-500">({subject.ratingCount.toLocaleString()})</span>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div className="p-6">
-                      <h2 className="font-semibold text-slate-900 group-hover:text-primary-600 transition-colors">
-                        {subject.title}
-                      </h2>
-                      {subject.instructor && (
-                        <p className="mt-1 text-sm text-slate-500">
-                          By {subject.instructor}
+                        <p className="mt-1 line-clamp-2 text-xs text-slate-400">
+                          {subject.shortDescription || subject.description || "No description."}
                         </p>
-                      )}
-                      <p className="mt-2 line-clamp-2 text-sm text-slate-600">
-                        {subject.shortDescription || subject.description || "No description."}
-                      </p>
-                    </div>
-                  </Link>
-                  <div className="border-t border-slate-100 px-6 pb-6 pt-2">
-                    <Link
-                      href={`/subjects/${subject.id}`}
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 transition-colors"
-                    >
-                      Enroll
+                        <div className="mt-3 flex items-center gap-2">
+                          <span className="font-bold text-white">
+                            {subject.price > 0 ? formatPrice(subject.price) : "Free"}
+                          </span>
+                          {hasDiscount && (
+                            <span className="text-sm text-slate-500 line-through">
+                              {formatPrice(subject.originalPrice!)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </Link>
+                    <div className="border-t border-slate-700 px-5 pb-5 pt-2">
+                      <Link
+                        href={`/subjects/${subject.id}`}
+                        className="inline-flex w-full items-center justify-center rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 transition-colors"
+                      >
+                        {subject.price > 0 ? "Buy Now" : "Enroll"}
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {total > pageSize && (
@@ -135,17 +172,17 @@ export default function SubjectsPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium disabled:opacity-50 hover:bg-slate-50"
+                  className="rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-300 disabled:opacity-50 hover:bg-slate-700"
                 >
                   Previous
                 </button>
-                <span className="flex items-center px-4 text-sm text-slate-600">
+                <span className="flex items-center px-4 text-sm text-slate-400">
                   Page {page} of {Math.ceil(total / pageSize)}
                 </span>
                 <button
                   onClick={() => setPage((p) => p + 1)}
                   disabled={page >= Math.ceil(total / pageSize)}
-                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium disabled:opacity-50 hover:bg-slate-50"
+                  className="rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-300 disabled:opacity-50 hover:bg-slate-700"
                 >
                   Next
                 </button>
@@ -154,6 +191,5 @@ export default function SubjectsPage() {
           </>
         )}
       </div>
-    </AuthGuard>
   );
 }

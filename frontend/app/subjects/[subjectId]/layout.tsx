@@ -50,11 +50,11 @@ export default function SubjectLayout({
     <AuthGuard>
       <div className="flex min-h-[calc(100vh-4rem)]">
         {isLearningPage && <SubjectSidebar />}
-        <div className="flex-1 flex flex-col">
-          <div className="border-b border-slate-200 bg-white px-6 py-4">
+        <div className="flex-1 flex flex-col bg-slate-900">
+          <div className="border-b border-slate-700 bg-slate-900 px-6 py-4">
             <Link
               href="/subjects"
-              className="text-sm font-medium text-slate-600 hover:text-primary-600"
+              className="text-sm font-medium text-slate-400 hover:text-white"
             >
               ← Back to courses
             </Link>

@@ -1,7 +1,7 @@
 export function Spinner({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`h-8 w-8 animate-spin rounded-full border-4 border-primary-200 border-t-primary-600 ${className}`}
+      className={`h-8 w-8 animate-spin rounded-full border-4 border-slate-600 border-t-emerald-500 ${className}`}
     />
   );
 }

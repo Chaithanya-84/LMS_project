@@ -98,7 +98,7 @@ export default function VideoPage() {
   if (error || !video) {
     return (
       <div className="p-8">
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-800">
+        <div className="rounded-xl border border-red-900/50 bg-red-900/20 p-6 text-red-400">
           {error || "Video not found"}
         </div>
       </div>
@@ -108,13 +108,13 @@ export default function VideoPage() {
   if (video.locked) {
     return (
       <div className="p-8">
-        <div className="mx-auto max-w-2xl rounded-xl border border-amber-200 bg-amber-50 p-8 text-center">
+        <div className="mx-auto max-w-2xl rounded-xl border border-amber-900/50 bg-amber-900/20 p-8 text-center">
           <div className="text-4xl mb-4">🔒</div>
-          <h2 className="text-xl font-semibold text-amber-900">Video locked</h2>
-          <p className="mt-2 text-amber-800">{video.unlock_reason || "Complete the previous video to unlock this one."}</p>
+          <h2 className="text-xl font-semibold text-amber-400">Video locked</h2>
+          <p className="mt-2 text-amber-300/80">{video.unlock_reason || "Complete the previous video to unlock this one."}</p>
           <Link
             href={`/subjects/${subjectId}/learn`}
-            className="mt-6 inline-block rounded-lg bg-amber-600 px-6 py-2 font-medium text-white hover:bg-amber-700"
+            className="mt-6 inline-block rounded-lg bg-amber-500 px-6 py-2 font-medium text-white hover:bg-amber-600"
           >
             Back to course
           </Link>
@@ -142,11 +142,11 @@ export default function VideoPage() {
           sectionTitle={video.section_title}
         />
 
-        <div className="mt-8 flex justify-between border-t border-slate-200 pt-6">
+        <div className="mt-8 flex justify-between border-t border-slate-700 pt-6">
           {video.previous_video_id ? (
             <Link
               href={`/subjects/${subjectId}/video/${video.previous_video_id}`}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800"
             >
               ← Previous
             </Link>
@@ -157,12 +157,12 @@ export default function VideoPage() {
             <button
               onClick={handleNextClick}
               disabled={navigating}
-              className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
+              className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600 disabled:opacity-50"
             >
               {navigating ? "..." : "Next →"}
             </button>
           ) : (
-            <div className="rounded-lg bg-primary-100 px-4 py-2 text-sm font-medium text-primary-800">
+            <div className="rounded-lg bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-400">
               Course complete! 🎉
             </div>
           )}

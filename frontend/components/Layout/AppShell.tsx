@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import { AIAssistant } from "@/components/AI/AIAssistant";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -20,36 +21,39 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+      <header className="sticky top-0 z-50 border-b border-slate-700/50 bg-slate-900/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-600 text-white font-bold text-lg shadow-lg shadow-primary-600/25">
-              K
-            </div>
-            <span className="font-semibold text-xl text-slate-800">LMS</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white font-bold text-lg shadow-lg shadow-emerald-500/25">
+                K
+              </div>
+              <span className="font-semibold text-xl text-white">LearnHub</span>
+            </Link>
+            <AIAssistant variant="header" />
+          </div>
 
-          <nav className="flex items-center gap-4">
+          <nav className="flex items-center gap-6">
             {isAuthenticated ? (
               <>
                 <Link
                   href="/subjects"
-                  className="text-slate-600 hover:text-primary-600 font-medium transition-colors"
+                  className="text-slate-300 hover:text-white font-medium transition-colors"
                 >
                   Courses
                 </Link>
                 <Link
                   href="/profile"
-                  className="text-slate-600 hover:text-primary-600 font-medium transition-colors"
+                  className="text-slate-300 hover:text-white font-medium transition-colors"
                 >
                   Profile
                 </Link>
-                <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
-                  <span className="text-sm text-slate-500">{user?.name}</span>
+                <div className="flex items-center gap-3 pl-4 border-l border-slate-700">
+                  <span className="text-sm text-slate-400">{user?.name}</span>
                   <button
                     onClick={handleLogout}
-                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                   >
                     Logout
                   </button>
@@ -59,13 +63,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <>
                 <Link
                   href="/auth/login"
-                  className="text-slate-600 hover:text-primary-600 font-medium transition-colors"
+                  className="text-slate-300 hover:text-white font-medium transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-primary-700 transition-colors"
+                  className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-emerald-600 transition-colors"
                 >
                   Sign up
                 </Link>
