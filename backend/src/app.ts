@@ -9,12 +9,13 @@ import subjectRoutes from "./modules/subjects/subject.routes.js";
 import videoRoutes from "./modules/videos/video.routes.js";
 import progressRoutes from "./modules/progress/progress.routes.js";
 import healthRoutes from "./modules/health/health.routes.js";
+import aiRoutes from "./modules/ai/ai.routes.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: env.corsOrigin,
+    origin: Array.isArray(env.corsOrigin) ? env.corsOrigin : [env.corsOrigin],
     credentials: true,
   })
 );
@@ -27,6 +28,7 @@ app.use("/api/subjects", subjectRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/health", healthRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use(errorHandler);
 

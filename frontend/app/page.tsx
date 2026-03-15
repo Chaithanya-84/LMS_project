@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import { AIAssistant } from "@/components/AI/AIAssistant";
 
 export default function HomePage() {
   const { isAuthenticated } = useAuthStore();
@@ -22,6 +23,10 @@ export default function HomePage() {
           >
             Browse Courses
           </Link>
+        </div>
+
+        <div className="mt-16 max-w-2xl mx-auto">
+          <AIAssistant defaultOpen={true} variant="card" />
         </div>
       </div>
     );

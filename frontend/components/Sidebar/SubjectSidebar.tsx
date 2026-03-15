@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import type { SubjectTree, TreeSection, TreeVideo } from "@/store/sidebarStore";
 import { useSidebarStore } from "@/store/sidebarStore";
 import { apiFetch } from "@/lib/apiClient";
+import { AIAssistant } from "@/components/AI/AIAssistant";
 import { Spinner } from "@/components/common/Spinner";
 
 export function SubjectSidebar() {
@@ -72,6 +73,8 @@ export function SubjectSidebar() {
             />
           ))}
         </nav>
+
+        <AIAssistant courseContext={tree.title} />
       </div>
     </aside>
   );
