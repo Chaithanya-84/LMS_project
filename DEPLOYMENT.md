@@ -114,8 +114,8 @@ Use [Render](https://render.com) to host the backend for free.
    - **Runtime:** Node
    - **Build Command:** `npm install --include=dev && npm run build`  
      *(Required: `--include=dev` installs TypeScript types needed for the build)*
-   - **Start Command:** `node scripts/use-postgres-schema.js && npx prisma db push && npm run db:seed && npm run start`  
-     *(Required: swaps to PostgreSQL schema before Prisma runs)*
+   - **Start Command:** `cp prisma/schema.postgres.prisma prisma/schema.prisma && npx prisma db push && npm run db:seed && npm run start`  
+     *(Required: uses PostgreSQL schema on Render)*
 4. Click **Advanced** and add **Environment Variables**:
 
    | Key | Value |

@@ -7,7 +7,7 @@ services:
     rootDir: backend
     # Include devDependencies for TypeScript build (Render skips them by default)
     buildCommand: npm install --include=dev && npm run build
-    startCommand: node scripts/use-postgres-schema.js && npx prisma db push && npm run db:seed && npm run start
+    startCommand: cp prisma/schema.postgres.prisma prisma/schema.prisma && npx prisma db push && npm run db:seed && npm run start
     envVars:
       - key: NODE_ENV
         value: production
