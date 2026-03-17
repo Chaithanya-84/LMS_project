@@ -39,7 +39,12 @@ export default function RegisterPage() {
       );
       router.push("/subjects");
     } catch (err) {
-      setError("Network error. Please try again.");
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
+      setError(
+        apiUrl.includes("localhost")
+          ? "Cannot reach API. Set NEXT_PUBLIC_API_BASE_URL on Vercel to your Railway backend URL."
+          : "Network error. Please try again."
+      );
     } finally {
       setLoading(false);
     }

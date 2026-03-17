@@ -1,0 +1,12 @@
+# Explicit build config for Railway/Nixpacks
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx prisma db push && npm run db:seed && node dist/server.js"

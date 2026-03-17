@@ -1,0 +1,19 @@
+# Render Blueprint - Backend Web Service
+# Root Directory must be set to "backend" in Render dashboard when using this
+services:
+  - type: web
+    name: lms-backend
+    runtime: node
+    rootDir: backend
+    # Include devDependencies for TypeScript build (Render skips them by default)
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: node scripts/use-postgres-schema.js && npx prisma db push && npm run db:seed && npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
